@@ -149,12 +149,4 @@ for i in range(1, table_count):
                     (td.text(), l))
         l += 1
 
-with conn:
-    app_version = conn.execute(
-        "SELECT version FROM main.app WHERE name = '[clash](https: //github.com/Fndroid/clash_for_windows_pkg)'"
-    ).fetchone()[0].lstrip('[').rstrip('](https: //github.com/Fndroid/clash_for_windows_pkg)')
-    conn.execute(
-        "UPDATE main.app SET name = 'clash', version = ? WHERE name = '[clash](https: //github.com/Fndroid/clash_for_windows_pkg)'",
-        (app_version,))
-
 conn.close()
