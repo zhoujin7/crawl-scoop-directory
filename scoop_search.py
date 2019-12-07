@@ -1,12 +1,14 @@
 import argparse
 import sqlite3
+from pathlib import Path
 
 parser = argparse.ArgumentParser(description='Search available apps.')
 parser.add_argument('app_name', metavar='app_name', type=str, nargs=1,
                     help="an app name")
 app_name = parser.parse_args().app_name[0]
 
-conn = sqlite3.connect('scoop_directory.db')
+scoop_directory_db = Path(__file__).resolve().parent.joinpath('scoop_directory.db')
+conn = sqlite3.connect(scoop_directory_db)
 with conn:
     apps = conn.execute(
         "SELECT * FROM main.app WHERE name LIKE ? ORDER BY version DESC", ('%' + app_name + '%',)

@@ -1,9 +1,11 @@
 import sqlite3
+from pathlib import Path
 
 import requests
 from pyquery import PyQuery as pq
 
-conn = sqlite3.connect('scoop_directory.db')
+scoop_directory_db = Path(__file__).resolve().parent.joinpath('scoop_directory.db')
+conn = sqlite3.connect(scoop_directory_db)
 
 with conn:
     conn.executescript('''\
