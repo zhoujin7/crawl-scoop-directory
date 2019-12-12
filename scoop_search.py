@@ -13,6 +13,7 @@ with conn:
     apps = conn.execute(
         "SELECT * FROM app WHERE name LIKE ? ORDER BY version DESC", ('%' + app_name + '%',)
     ).fetchall()
+conn.close()
 
 
 def max_length_of_line(arr):
@@ -49,5 +50,3 @@ i = 0
 while i < len(app_names):
     print(f'{app_names[i]}\t{app_versions[i]}\t{app_bucket_repos[i]}')
     i += 1
-
-conn.close()
