@@ -11,7 +11,7 @@ scoop_directory_db = Path(__file__).resolve().parent.joinpath('scoop_directory.d
 conn = sqlite3.connect(scoop_directory_db)
 with conn:
     apps = conn.execute(
-        "SELECT * FROM main.app WHERE name LIKE ? ORDER BY version DESC", ('%' + app_name + '%',)
+        "SELECT * FROM app WHERE name LIKE ? ORDER BY version DESC", ('%' + app_name + '%',)
     ).fetchall()
 
 

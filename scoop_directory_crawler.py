@@ -54,13 +54,13 @@ for td in d("table").eq(0)("tr td:nth-child(2)").items():
     if td("a").attr("href").startswith("https"):
         bucket_repos.append(td("a").attr("href"))
         with conn:
-            conn.execute("INSERT INTO main.bucket(bucket_repo) VALUES (?)", (td("a").attr("href"),))
+            conn.execute("INSERT INTO bucket(bucket_repo) VALUES (?)", (td("a").attr("href"),))
 
 idx = 0
 for td in d("table").eq(0)("tr td:nth-child(1)").items():
     if idx < table_count - 1:
         with conn:
-            conn.execute("UPDATE main.bucket SET score = ? WHERE bucket_repo = ?",
+            conn.execute("UPDATE bucket SET score = ? WHERE bucket_repo = ?",
                          (td.text().partition(". ")[2], bucket_repos[idx]))
     idx += 1
 
@@ -68,7 +68,7 @@ idx = 0
 for td in d("table").eq(0)("tr td:nth-child(3)").items():
     if idx < table_count - 1:
         with conn:
-            conn.execute("UPDATE main.bucket SET apps = ? WHERE bucket_repo = ?", (td("a").text(), bucket_repos[idx]))
+            conn.execute("UPDATE bucket SET apps = ? WHERE bucket_repo = ?", (td("a").text(), bucket_repos[idx]))
     idx += 1
 
 nths = [4, 5, 6]
@@ -79,7 +79,7 @@ while while_idx < len(nths):
     for td in d("table").eq(0)(f"tr td:nth-child({nths[while_idx]})").items():
         if idx < table_count - 1:
             with conn:
-                conn.execute(f"UPDATE main.bucket SET {bucket_fields[while_idx]} = ? WHERE bucket_repo = ?",
+                conn.execute(f"UPDATE bucket SET {bucket_fields[while_idx]} = ? WHERE bucket_repo = ?",
                              (td("a").text(), bucket_repos[idx]))
         idx += 1
     while_idx += 1
@@ -98,12 +98,12 @@ for i in range(1, table_count):
         if td("a").text():
             with conn:
                 conn.execute(
-                    "INSERT INTO main.app(id, name, bucket_repo) VALUES (?, ?, ?)",
+                    "INSERT INTO app(id, name, bucket_repo) VALUES (?, ?, ?)",
                     (app_id, td("a").text(), bucket_repos[i - 1]))
         else:
             with conn:
                 conn.execute(
-                    "INSERT INTO main.app(id, name, bucket_repo) VALUES (?, ?, ?)",
+                    "INSERT INTO app(id, name, bucket_repo) VALUES (?, ?, ?)",
                     (app_id, td.text(), bucket_repos[i - 1]))
         app_id += 1
 
@@ -111,12 +111,12 @@ for i in range(1, table_count):
         if td("a").text():
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET version = ? WHERE id = ?",
+                    "UPDATE app SET version = ? WHERE id = ?",
                     (td("a").text(), j))
         else:
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET version = ? WHERE id = ?",
+                    "UPDATE app SET version = ? WHERE id = ?",
                     (td.text(), j))
         j += 1
 
@@ -124,12 +124,12 @@ for i in range(1, table_count):
         if td("a").text():
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET description = ? WHERE id = ?",
+                    "UPDATE app SET description = ? WHERE id = ?",
                     (td("a").text(), k))
         else:
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET description = ? WHERE id = ?",
+                    "UPDATE app SET description = ? WHERE id = ?",
                     (td.text(), k))
         k += 1
 
@@ -137,17 +137,17 @@ for i in range(1, table_count):
         if td("a").text() == 'Link':
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET license = ? WHERE id = ?",
+                    "UPDATE app SET license = ? WHERE id = ?",
                     (td("a").attr("href"), l))
         elif td("a").text():
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET license = ? WHERE id = ?",
+                    "UPDATE app SET license = ? WHERE id = ?",
                     (td("a").text(), l))
         else:
             with conn:
                 conn.execute(
-                    "UPDATE main.app SET license = ? WHERE id = ?",
+                    "UPDATE app SET license = ? WHERE id = ?",
                     (td.text(), l))
         l += 1
 
