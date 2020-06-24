@@ -38,15 +38,15 @@ PRAGMA foreign_keys = true;
 
 def get_content(url):
     # proxies = {
-    #     "http": "http://127.0.0.1:1080",
-    #     "https": "http://127.0.0.1:1080",
+    #     "http": "http://127.0.0.1:7890",
+    #     "https": "http://127.0.0.1:7890",
     # }
     # req = requests.get(url, proxies=proxies)
     req = requests.get(url)
     return req.content.decode('utf-8')
 
 
-d = pq(get_content(url='https://github.com/rasa/scoop-directory/blob/master/by-score.md'))
+d = pq(get_content(url='https://rasa.github.io/scoop-directory/by-score'))
 table_count = d("table").length
 
 bucket_repos = []
@@ -85,8 +85,8 @@ while while_idx < len(nths):
     while_idx += 1
 
 bucket_repos = []
-for i in range(3, d('h3').length):
-    bucket_repos.append(d('h3').eq(i)('a').eq(2).attr("href"))
+for i in range(0, d('h3').length):
+    bucket_repos.append(d('h3').eq(i)('a').eq(1).attr("href"))
 
 app_id = 1
 
