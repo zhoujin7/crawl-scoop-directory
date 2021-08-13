@@ -32,6 +32,7 @@ jobs:
         git add -A
         git commit -m "Update scoop_directory.db"
     - name: Pull changes
+      run: |
         git pull
     - name: Push changes
       uses: ad-m/github-push-action@master
