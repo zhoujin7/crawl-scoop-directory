@@ -85,8 +85,8 @@ while while_idx < len(nths):
     while_idx += 1
 
 bucket_repos = []
-for i in range(0, d('h3').length):
-    bucket_repos.append(d('h3').eq(i)('a').eq(1).attr("href"))
+for i in range(0, d('h2').length):
+    bucket_repos.append(d('h2').eq(i)('a').eq(1).attr("href"))
 
 app_id = 1
 
