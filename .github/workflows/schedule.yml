@@ -2,7 +2,7 @@ name: Update scoop_directory.db
 
 on:
   schedule:
-  - cron: '*/15 * * * *'
+  - cron: '1 */12 * * *'
 
 jobs:
   update-db:
